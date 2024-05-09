@@ -1,5 +1,7 @@
+#only for testing
 aws:
   cognito:
     secret-key: 89v7qvxBXnaIIHd1csjcZOCxX9T1Ks3h2k5rNPt5
     access-key: AKIAQ3EGT3RSB34LQXPE
     pool-id: eu-north-1_b8Za1Y6wJ
+    client-id: 7roi6sdoem1aq08p7i3liiggna

@@ -12,4 +12,5 @@ public class CognitoProperties {
     private String secretKey;
     private String accessKey;
     private String poolId;
+    private String clientId;
 }
