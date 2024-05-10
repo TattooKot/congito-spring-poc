@@ -1,6 +1,13 @@
 package com.example.congitospringpoc.utils;
 
-import com.amazonaws.services.cognitoidp.model.*;
+import com.amazonaws.services.cognitoidp.model.AdminCreateUserRequest;
+import com.amazonaws.services.cognitoidp.model.AdminGetUserRequest;
+import com.amazonaws.services.cognitoidp.model.AdminRespondToAuthChallengeRequest;
+import com.amazonaws.services.cognitoidp.model.AttributeType;
+import com.amazonaws.services.cognitoidp.model.ChangePasswordRequest;
+import com.amazonaws.services.cognitoidp.model.ChallengeNameType;
+import com.amazonaws.services.cognitoidp.model.InitiateAuthRequest;
+import com.amazonaws.services.cognitoidp.model.InitiateAuthResult;
 import com.example.congitospringpoc.config.CognitoProperties;
 import com.example.congitospringpoc.dto.UserPasswordChangingDto;
 import com.example.congitospringpoc.dto.UserRegistrationDto;
