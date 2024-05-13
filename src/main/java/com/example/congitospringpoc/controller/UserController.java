@@ -10,13 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.example.congitospringpoc.utils.UserUtils.getUserStatus;
-
 @RestController
 @AllArgsConstructor
 public class UserController {
 
-    private static final String FORCE_CHANGE_PASSWORD_STATUS = "FORCE_CHANGE_PASSWORD";
     private final UserService userService;
 
     @PostMapping("/register")
@@ -27,13 +24,6 @@ public class UserController {
 
     @PostMapping("/login")
     public String loginUser(@RequestBody UserLoginDto userLoginDto) {
-        var user = userService.getUser(userLoginDto.getUsername());
-        var userStatus = getUserStatus(user);
-
-        if (userStatus.equals(FORCE_CHANGE_PASSWORD_STATUS)) {
-            return "you should change your password. Redirection to page with password changing";
-        }
-
         return userService.login(userLoginDto);
     }
 

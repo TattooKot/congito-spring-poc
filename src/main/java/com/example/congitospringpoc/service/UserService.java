@@ -12,12 +12,14 @@ import com.example.congitospringpoc.utils.UserUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class UserService {
 
+    private static final String FORCE_CHANGE_PASSWORD_STATUS = "FORCE_CHANGE_PASSWORD";
     private final AWSCognitoIdentityProvider cognitoIdentityProvider;
     private final RequestsBuilder requestsBuilder;
 
@@ -29,9 +31,27 @@ public class UserService {
     }
 
     public String login(UserLoginDto userLoginDto) {
-        return Optional.ofNullable(userLoginDto)
+        if(isPasswordChangingRequired(userLoginDto)) {
+            return "you should change your password. Redirection to page with password changing";
+        }
+
+        return Optional.of(userLoginDto)
                 .map(dto -> getInitiateAuth(userLoginDto.getUsername(), userLoginDto.getPassword()))
                 .map(UserUtils::getAccessToken)
+                .orElseThrow();
+    }
+
+    private boolean isPasswordChangingRequired(UserLoginDto userLoginDto) {
+        return Optional.ofNullable(userLoginDto.getUsername())
+                .map(this::checkUserStatus)
+                .filter(status -> Objects.equals(status, FORCE_CHANGE_PASSWORD_STATUS))
+                .isPresent();
+    }
+
+    private String checkUserStatus(String username) {
+        return Optional.ofNullable(username)
+                .map(this::getUser)
+                .map(UserUtils::getUserStatus)
                 .orElseThrow();
     }
 
